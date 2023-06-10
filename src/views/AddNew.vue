@@ -1,0 +1,75 @@
+<template>
+  <div class="py-6 xl:py-24">
+    <div class="container block mx-auto px-5 flex gap-6">
+      <div class="flex flex-col w-full">
+        <BaseHeading> Add User </BaseHeading>
+        <form @submit.prevent="addUser">
+          <div class="flex flex-col xl:flex-row w-full gap-6 mt-8">
+            <div class="w-full xl:w-3/4 bg-white xl:min-h-[378px] rounded-md shadow-md">
+              <div class="p-6 flex flex-col justify-between h-full">
+                <div class="flex flex-col justify-between h-full">
+                  <div class="flex flex-col xl:flex-row w-full gap-6">
+                    <InputDefault :id="1" placeholder="name" class="xl:w-1/2" v-model="name"
+                      >First name</InputDefault
+                    >
+                    <InputDefault :id="2" placeholder="surname" class="xl:w-1/2" v-model="surname"
+                      >Last Name</InputDefault
+                    >
+                  </div>
+                  <div class="mt-4 xl:mt-0">
+                    <ButtonDefault :update="true" type="submit">Add User</ButtonDefault>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="w-full xl:w-1/4 bg-white flex items-center flex-col justify-center p-4 rounded-md shadow-md"
+            >
+              <img
+                :src="image"
+                alt="user-img"
+                class="w-[150px] h-[150px] border-2 border-gray-300 rounded-full object-cover"
+              />
+
+              <InputDefault v-if="photoInput" v-model="image" class="mt-4" />
+
+              <button
+                @click="photoInput = !photoInput"
+                type="button"
+                class="border rounded border-black w-full mt-[90px] flex items-center justify-center gap-3"
+              >
+                <PhotoIcon />
+                <span>change photo</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import InputDefault from '../components/InputDefault.vue'
+import BaseHeading from '../components/BaseHeading.vue'
+import ButtonDefault from '../components/ButtonDefault.vue'
+import PhotoIcon from '../components/Icons/PhotoIcon.vue'
+
+import { reactive, ref } from 'vue'
+import { onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+const name = ref('')
+const surname = ref('')
+const image = ref('https://img.freepik.com/free-icon/user_318-159711.jpg')
+
+const photoInput = ref(false)
+const addUser = () => {
+  const formData = {
+    name: name.value,
+    surname: surname.value,
+    image: image.value
+  }
+
+  console.log(formData, 'addUser')
+}
+</script>
