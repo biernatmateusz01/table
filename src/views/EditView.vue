@@ -1,5 +1,11 @@
 <template>
   <div class="container block mx-auto mt-24 px-5 flex gap-6">
+    <div v-if="succesInfo" class="fixed top-12 rounded text-green-600 right-12 bg-white p-4">
+      Succesfully edit person
+    </div>
+    <div v-if="problemInfo" class="fixed top-12 rounded text-red-600 right-12 bg-white p-4">
+      Something went wrong
+    </div>
     <div class="flex flex-col w-full">
       <BaseHeading> User list </BaseHeading>
       <form @submit.prevent="updateDetails">
@@ -55,11 +61,15 @@ import PhotoIcon from '../components/Icons/PhotoIcon.vue'
 
 import { reactive, ref } from 'vue'
 import { onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 const name = ref('')
 const surname = ref('')
 const image = ref('https://img.freepik.com/free-icon/user_318-159711.jpg')
 const photoInput = ref(false)
+const route = useRoute()
+const router = useRouter()
+const succesInfo = ref(false)
+const problemInfo = ref(false)
 
 let userData = ref([])
 
@@ -80,12 +90,27 @@ const getData = async () => {
 
 const updateDetails = () => {
   const formData = {
-    name: name.value,
-    surname: surname.value,
-    image: image.value
+    first_name: name.value,
+    last_name: surname.value,
+    avatar: image.value
   }
 
-  alert(formData, 'update')
+  if (name.value != '' && surname.value != '') {
+    fetch(`https://reqres.in/api/users/${route.params.id}`, {
+      method: 'PUT',
+      body: formData.value
+    })
+      .then((res) => res)
+      .then((res) => console.log(res))
+      .then((succesInfo.value = true))
+      .catch((problemInfo.value = true))
+
+    setTimeout(() => {
+      router.push({ path: '/' })
+    }, '1000')
+  } else {
+    alert('sprawdź czy wypełniłeś wszystkie pola')
+  }
 }
 
 onMounted(() => {

@@ -2,12 +2,16 @@
   <Transition>
     <BaseModal v-if="openModal">
       <div class="flex items-center justify-center h-full w-full">
-        <div class="bg-white p-4 flex flex-col">
-          <span>Do you really want to remove the ?</span>
-          <span>{{ userForDelete.first_name }} {{ userForDelete.last_name }}</span>
+        <div class="bg-white p-4 flex flex-col rounded">
+          <span class="text-xl">Do you really want to remove the ?</span>
+          <span class="text-xl">{{ userForDelete.first_name }} {{ userForDelete.last_name }}</span>
           <div class="flex gap-2 mt-2">
-            <button @click="closeModal" type="">No</button>
-            <button @click="deleteUser" type="">Yes</button>
+            <button @click="closeModal" type="" class="rounded bg-red-600 text-white px-2">
+              No
+            </button>
+            <button @click="deleteUser" type="" class="rounded bg-green-600 text-white px-2">
+              Yes
+            </button>
           </div>
         </div>
       </div>
@@ -107,7 +111,7 @@ const minusPage = (item) => {
 }
 
 const plusPage = (item) => {
-  activePage.value = activePage.value + 1
+  activePage.value = Number(activePage.value) + 1
 
   getData()
 }
