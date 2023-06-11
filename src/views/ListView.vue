@@ -18,9 +18,9 @@
     </BaseModal>
   </Transition>
 
-  <div class="container block mx-auto py-4 px-4 xl:px-0 xl:py-16">
+  <DefaultLayout>
     <div class="mb-4">
-      <BaseHeading> Add User </BaseHeading>
+      <BaseHeading> User List </BaseHeading>
 
       <div class="bg-white px-4 py-10 rounded-md shadow-md mt-8">
         <div class="flex justify-between">
@@ -30,7 +30,7 @@
           </router-link>
         </div>
         <div class="mt-6 border-t pt-10">
-          <MainTable :usersList="usersList" @usun-element="usun($event)" />
+          <MainTable :usersList="usersList" @delete-element="deletePerson($event)" />
         </div>
       </div>
     </div>
@@ -41,7 +41,7 @@
       @plus-page="plusPage($event)"
       :totalPages="totalPages"
     />
-  </div>
+  </DefaultLayout>
 </template>
 
 <script setup>
@@ -51,6 +51,7 @@ import BasePagination from '../components/BasePagination.vue'
 import ButtonDefault from '../components/ButtonDefault.vue'
 import BaseHeading from '../components/BaseHeading.vue'
 import BaseModal from '../components/BaseModal.vue'
+import DefaultLayout from '../layouts/Default.vue'
 
 import { reactive, ref, computed } from 'vue'
 import { onMounted } from 'vue'
@@ -80,8 +81,8 @@ const getData = async () => {
   router.push({ path: '/', query: { page: activePage.value } })
 }
 
-const usun = (usun) => {
-  userForDelete.value = usun
+const deletePerson = (item) => {
+  userForDelete.value = item
   openModal.value = true
 }
 

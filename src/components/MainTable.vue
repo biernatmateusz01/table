@@ -25,7 +25,7 @@
               </router-link>
             </button>
             <button class="ml-1">
-              <DeleteIcon @click="$emit('usun-element', user)" />
+              <DeleteIcon @click="$emit('delete-element', user)" />
             </button>
           </td>
         </tr>

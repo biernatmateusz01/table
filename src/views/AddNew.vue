@@ -1,12 +1,6 @@
 <template>
-  <div class="py-6 xl:py-24">
-    <div v-if="succesInfo" class="fixed top-12 rounded text-green-600 right-12 bg-white p-4">
-      Succesfully add person
-    </div>
-        <div v-if="problemInfo" class="fixed top-12 rounded text-red-600 right-12 bg-white p-4">
-      Something went wrong
-    </div>
-    <div class="container block mx-auto px-5 flex gap-6">
+  <DefaultLayout>
+    <div class="container block mx-auto flex gap-6">
       <div class="flex flex-col w-full">
         <BaseHeading> Add User </BaseHeading>
         <form @submit.prevent="addUser">
@@ -42,17 +36,17 @@
               <button
                 @click="photoInput = !photoInput"
                 type="button"
-                class="border rounded border-black w-full mt-[90px] flex items-center justify-center gap-3"
+                class="border rounded border-gray-500 w-full mt-[90px] flex items-center justify-center gap-3"
               >
                 <PhotoIcon />
-                <span>change photo</span>
+                <span class="text-gray-500">change photo</span>
               </button>
             </div>
           </div>
         </form>
       </div>
     </div>
-  </div>
+  </DefaultLayout>
 </template>
 
 <script setup>
@@ -60,6 +54,7 @@ import InputDefault from '../components/InputDefault.vue'
 import BaseHeading from '../components/BaseHeading.vue'
 import ButtonDefault from '../components/ButtonDefault.vue'
 import PhotoIcon from '../components/Icons/PhotoIcon.vue'
+import DefaultLayout from '../layouts/Default.vue'
 
 import { reactive, ref } from 'vue'
 import { onMounted } from 'vue'
@@ -68,8 +63,8 @@ const name = ref('')
 const surname = ref('')
 const image = ref('https://img.freepik.com/free-icon/user_318-159711.jpg')
 const router = useRouter()
-const succesInfo = ref(false)
-const problemInfo = ref(false)
+const validationName = ref(null)
+const validationSurname = ref(null)
 
 const photoInput = ref(false)
 const addUser = () => {
@@ -85,15 +80,17 @@ const addUser = () => {
       body: formData.value
     })
       .then((res) => res)
-      .then((res) => console.log(res))
-      .then((succesInfo.value = true))
-      .catch((problemInfo.value = true))
-
-    setTimeout(() => {
-      router.push({ path: '/' })
-    }, '1000')
+      .then((res) => {
+        cosnole.log(res)
+        setTimeout(() => {
+          router.push({ path: '/' })
+        }, '1000')
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   } else {
-    alert('sprawdź czy wypełniłeś wszystkie pola')
+    alert('upewnij się ze wypełniłes wszystkie pola')
   }
 }
 </script>
