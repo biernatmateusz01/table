@@ -9,10 +9,20 @@
               <div class="p-6 flex flex-col justify-between h-full">
                 <div class="flex flex-col justify-between h-full">
                   <div class="flex flex-col xl:flex-row w-full gap-6">
-                    <InputDefault :id="1" placeholder="name" class="xl:w-1/2" v-model="name"
+                    <InputDefault
+                      :id="1"
+                      placeholder="name"
+                      :validation="validationName"
+                      class="xl:w-1/2"
+                      v-model="name"
                       >First name</InputDefault
                     >
-                    <InputDefault :id="2" placeholder="surname" class="xl:w-1/2" v-model="surname"
+                    <InputDefault
+                      :id="2"
+                      placeholder="surname"
+                      :validation="validationSurname"
+                      class="xl:w-1/2"
+                      v-model="surname"
                       >Last Name</InputDefault
                     >
                   </div>
@@ -63,8 +73,8 @@ const name = ref('')
 const surname = ref('')
 const image = ref('https://img.freepik.com/free-icon/user_318-159711.jpg')
 const router = useRouter()
-const validationName = ref(null)
-const validationSurname = ref(null)
+const validationName = ref(false)
+const validationSurname = ref(false)
 
 const photoInput = ref(false)
 const addUser = () => {
@@ -76,6 +86,8 @@ const addUser = () => {
   }
 
   if (name.value != '' && surname.value != '') {
+    validationName.value = false
+    validationSurname.value = false
     fetch(`https://reqres.in/api/users`, {
       method: 'POST',
       body: formData.value
@@ -90,9 +102,16 @@ const addUser = () => {
       .catch((err) => {
         console.log(err)
       })
-      console.log(formData)
+    console.log(formData)
+  } else if (name.value != '' && surname.value === '') {
+    validationName.value = false
+    validationSurname.value = true
+  } else if (name.value === '' && surname.value != '') {
+    validationName.value = true
+    validationSurname.value = false
   } else {
-    alert('upewnij się ze wypełniłes wszystkie pola')
+    validationName.value = true
+    validationSurname.value = true
   }
 }
 </script>

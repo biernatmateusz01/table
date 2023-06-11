@@ -1,6 +1,9 @@
 <template>
   <div class="flex gap-1">
-    <button @click="$emit('minus-page')" class="px-2 py-1 border border-gray-300 rounded-l-lg bg-white">
+    <button
+      @click="$emit('minus-page')"
+      class="px-2 py-1 border border-gray-300 rounded-l-lg bg-white"
+    >
       <LeftIcon />
     </button>
     <button
@@ -16,7 +19,10 @@
     >
       {{ item }}
     </button>
-    <button @click="$emit('plus-page')" class="px-2 py-1 border border-gray-300 rounded-r-lg bg-white">
+    <button
+      @click="$emit('plus-page')"
+      class="px-2 py-1 border border-gray-300 rounded-r-lg bg-white"
+    >
       <RightIcon />
     </button>
   </div>

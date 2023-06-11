@@ -8,10 +8,20 @@
             <div class="p-6 flex flex-col justify-between h-full">
               <div class="flex flex-col justify-between h-full">
                 <div class="flex flex-col xl:flex-row w-full gap-6">
-                  <InputDefault :id="1" placeholder="name" class="xl:w-1/2" v-model="name"
+                  <InputDefault
+                    :id="1"
+                    placeholder="name"
+                    :validation="validationName"
+                    class="xl:w-1/2"
+                    v-model="name"
                     >First name</InputDefault
                   >
-                  <InputDefault :id="2" placeholder="surname" class="xl:w-1/2" v-model="surname"
+                  <InputDefault
+                    :id="2"
+                    placeholder="surname"
+                    :validation="validationSurname"
+                    class="xl:w-1/2"
+                    v-model="surname"
                     >Last Name</InputDefault
                   >
                 </div>
@@ -63,6 +73,8 @@ const image = ref('https://img.freepik.com/free-icon/user_318-159711.jpg')
 const photoInput = ref(false)
 const route = useRoute()
 const router = useRouter()
+const validationName = ref(false)
+const validationSurname = ref(false)
 
 let userData = ref([])
 
@@ -89,6 +101,8 @@ const updateDetails = () => {
   }
 
   if (name.value != '' && surname.value != '') {
+    validationName.value = false
+    validationSurname.value = false
     fetch(`https://reqres.in/api/users/${route.params.id}`, {
       method: 'PUT',
       body: formData.value
@@ -103,8 +117,15 @@ const updateDetails = () => {
       .catch((err) => {
         console.log(err)
       })
+  } else if (name.value != '' && surname.value === '') {
+    validationName.value = false
+    validationSurname.value = true
+  } else if (name.value === '' && surname.value != '') {
+    validationName.value = true
+    validationSurname.value = false
   } else {
-    alert('upewnij się ze wypełniłes wszystkie pola')
+    validationName.value = true
+    validationSurname.value = true
   }
 }
 

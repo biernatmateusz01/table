@@ -18,6 +18,6 @@ import PlusIcon from '../components/Icons/PlusIcon.vue'
 defineProps({
   addUser: Boolean,
   update: Boolean,
-  type: String,
+  type: String
 })
 </script>

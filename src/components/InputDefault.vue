@@ -5,6 +5,7 @@
     </label>
     <div
       class="flex items-center px-3 overflow-hidden text-sm border border-gray-300 rounded-md focus-within:border-accent focus-within:ring-1 focus-within:ring-accent"
+      :class="validation ? 'border-red-300' : ' border-gray-300'"
     >
       <input
         :id="`base-input-${id}`"
