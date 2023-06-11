@@ -85,7 +85,7 @@ const updateDetails = () => {
   const formData = {
     first_name: name.value,
     last_name: surname.value,
-    avatar: image.value
+    avatar: image.value === '' ? userData.value.data.avatar : image.value
   }
 
   if (name.value != '' && surname.value != '') {

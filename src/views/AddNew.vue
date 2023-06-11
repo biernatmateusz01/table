@@ -71,7 +71,8 @@ const addUser = () => {
   const formData = {
     first_name: name.value,
     last_name: surname.value,
-    avatar: image.value
+    avatar:
+      image.value === '' ? 'https://img.freepik.com/free-icon/user_318-159711.jpg' : image.value
   }
 
   if (name.value != '' && surname.value != '') {
@@ -81,7 +82,7 @@ const addUser = () => {
     })
       .then((res) => res)
       .then((res) => {
-        cosnole.log(res)
+        console.log(res)
         setTimeout(() => {
           router.push({ path: '/' })
         }, '1000')
@@ -89,6 +90,7 @@ const addUser = () => {
       .catch((err) => {
         console.log(err)
       })
+      console.log(formData)
   } else {
     alert('upewnij się ze wypełniłes wszystkie pola')
   }
